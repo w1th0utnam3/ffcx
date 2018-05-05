@@ -15,9 +15,11 @@
 #define UFC_VERSION_RELEASE 0
 
 #if UFC_VERSION_RELEASE
-#define UFC_VERSION UFC_VERSION_MAJOR "." UFC_VERSION_MINOR "." UFC_VERSION_MAINTENANCE
+#define UFC_VERSION                                                            \
+  UFC_VERSION_MAJOR "." UFC_VERSION_MINOR "." UFC_VERSION_MAINTENANCE
 #else
-#define UFC_VERSION UFC_VERSION_MAJOR "." UFC_VERSION_MINOR "." UFC_VERSION_MAINTENANCE ".dev0"
+#define UFC_VERSION                                                            \
+  UFC_VERSION_MAJOR "." UFC_VERSION_MINOR "." UFC_VERSION_MAINTENANCE ".dev0"
 #endif
 
 #include <stdbool.h>
@@ -34,8 +36,8 @@ extern "C"
 #define restrict __restrict__
 #else
 #define restrict
-#endif  // restrict
-#endif  // __cplusplus
+#endif // restrict
+#endif // __cplusplus
 
   typedef enum
   {
@@ -406,15 +408,15 @@ extern "C"
     const bool* enabled_coefficients;
     void (*tabulate_tensor)(double* restrict A, const double* const* w,
                             const double* restrict coordinate_dofs,
-                            int cell_orientation);
+                            const int* local_entities, int cell_orientation);
   } ufc_cell_integral;
 
   typedef struct ufc_exterior_facet_integral
   {
     const bool* enabled_coefficients;
     void (*tabulate_tensor)(double* restrict A, const double* const* w,
-                            const double* restrict coordinate_dofs, int facet,
-                            int cell_orientation);
+                            const double* restrict coordinate_dofs,
+                            const int* local_entities, int cell_orientation);
   } ufc_exterior_facet_integral;
 
   typedef struct ufc_interior_facet_integral
@@ -423,7 +425,7 @@ extern "C"
     void (*tabulate_tensor)(double* restrict A, const double* const* w,
                             const double* restrict coordinate_dofs_0,
                             const double* restrict coordinate_dofs_1,
-                            int facet_0, int facet_1, int cell_orientation_0,
+                            const int* local_entities, int cell_orientation_0,
                             int cell_orientation_1);
   } ufc_interior_facet_integral;
 
@@ -431,8 +433,8 @@ extern "C"
   {
     const bool* enabled_coefficients;
     void (*tabulate_tensor)(double* restrict A, const double* const* w,
-                            const double* restrict coordinate_dofs, int vertex,
-                            int cell_orientation);
+                            const double* restrict coordinate_dofs,
+                            const int* local_entities, int cell_orientation);
   } ufc_vertex_integral;
 
   typedef struct ufc_custom_integral
@@ -568,7 +570,6 @@ extern "C"
     /// Create a new custom integral on everywhere else
     ufc_custom_integral* (*create_default_custom_integral)();
   } ufc_form;
-
 
   // FIXME: Formalise a UFC 'function space'.
   typedef struct dolfin_function_space

@@ -13,6 +13,7 @@ tabulate_implementation = {
     """
 void tabulate_tensor_{factory_name}(double* restrict A, const double* const* w,
                                     const double* restrict coordinate_dofs,
+                                    const int* local_entities,
                                     int cell_orientation)
 {{
 {tabulate_tensor}
@@ -22,7 +23,8 @@ void tabulate_tensor_{factory_name}(double* restrict A, const double* const* w,
     """
 void tabulate_tensor_{factory_name}(double* restrict A, const double* const *w,
                                      const double* restrict coordinate_dofs,
-                                     int facet, int cell_orientation)
+                                     const int* local_entities,
+                                     int cell_orientation)
 {{
 {tabulate_tensor}
 }}
@@ -31,8 +33,9 @@ void tabulate_tensor_{factory_name}(double* restrict A, const double* const *w,
     """
 void tabulate_tensor_{factory_name}(double* restrict A, const double*const * w,
                                     const double* restrict coordinate_dofs_0,
-                                    const double* restrict coordinate_dofs_1, int facet_0,
-                                    int facet_1, int cell_orientation_0,
+                                    const double* restrict coordinate_dofs_1,
+                                    const int* local_entities,
+                                    int cell_orientation_0,
                                     int cell_orientation_1)
 {{
 {tabulate_tensor}
@@ -41,7 +44,8 @@ void tabulate_tensor_{factory_name}(double* restrict A, const double*const * w,
     "vertex":
     """
 void tabulate_tensor_{factory_name}(double* restrict A, const double* const * w,
-                                    const double* restrict coordinate_dofs, int vertex,
+                                    const double* restrict coordinate_dofs,
+                                    const int* local_entities,
                                     int cell_orientation)
 {{
 {tabulate_tensor}

@@ -182,6 +182,16 @@ class IntegralGenerator(object):
 
         parts = []
 
+        # Get any local entity index relative to cell
+        local_entities = L.Symbol("local_entities")
+        if self.ir["integral_type"] == "exterior_facet":
+            parts = [L.VariableDecl("int", L.Symbol("facet"), local_entities[0])]
+        elif self.ir["integral_type"] == "interior_facet":
+            parts = [L.VariableDecl("int", L.Symbol("facet_0"), local_entities[0]),
+                     L.VariableDecl("int", L.Symbol("facet_1"), local_entities[1])]
+        elif self.ir["integral_type"] == "vertex":
+            parts = [L.VariableDecl("int", L.Symbol("vertex"), local_entities[0])]
+
         # Generate the tables of quadrature points and weights
         parts += self.generate_quadrature_tables()
 
